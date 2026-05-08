@@ -118,9 +118,8 @@
 				background-color: var(--primary-hover);
 			}
 
-			#send-button:disabled {
-				background-color: var(--text-light);
-				cursor: not-allowed;
+			#newChatButton:hover {
+				background-color: var(--primary-hover);
 			}
 
 			.typing-indicator {
@@ -140,22 +139,143 @@
 				font-size: 0.85rem;
 				color: var(--text-light);
 			}
+
+			/* Copy button styles */
+			.message {
+				position: relative;
+			}
+
+			.copy-button {
+				position: absolute;
+				top: 0.5rem;
+				right: 0.5rem;
+				background: rgba(255, 255, 255, 0.8);
+				border: 1px solid var(--border-color);
+				border-radius: 4px;
+				padding: 0.25rem 0.5rem;
+				font-size: 0.75rem;
+				cursor: pointer;
+				opacity: 0;
+				transition: opacity 0.2s;
+			}
+
+			.message:hover .copy-button {
+				opacity: 1;
+			}
+
+			.copy-button:hover {
+				background: rgba(255, 255, 255, 0.9);
+			}
+
+			/* Markdown styles */
+			.message code {
+				background: rgba(0, 0, 0, 0.1);
+				padding: 0.125rem 0.25rem;
+				border-radius: 3px;
+				font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+				font-size: 0.9em;
+			}
+
+			.message pre {
+				background: rgba(0, 0, 0, 0.1);
+				padding: 0.75rem;
+				border-radius: 4px;
+				overflow-x: auto;
+				margin: 0.5rem 0;
+			}
+
+			.message pre code {
+				background: none;
+				padding: 0;
+			}
+
+			.message blockquote {
+				border-left: 3px solid var(--primary-color);
+				padding-left: 0.75rem;
+				margin: 0.5rem 0;
+				color: var(--text-light);
+			}
+
+			.message strong {
+				font-weight: bold;
+			}
+
+			.message em {
+				font-style: italic;
+			}
+
+			.message ul, .message ol {
+				margin: 0.5rem 0;
+				padding-left: 1.5rem;
+			}
+
+			.message li {
+				margin: 0.25rem 0;
+			}
+
+			.message a {
+				color: var(--primary-color);
+				text-decoration: underline;
+			}
+
+			.message a:hover {
+				color: var(--primary-hover);
+			}
+
+			body.dark {
+				background-color: #111827;
+				color: white;
+			}
+
+			body.dark .chat-container {
+				background: #1f2937;
+			}
+
+			body.dark .message.bot {
+				background: #374151;
+			}
+
+			body.dark input {
+				background: #1f2937;
+				color: white;
+				border: 1px solid #555;
+			}
+
+			body.dark .copy-button {
+				background: rgba(31, 41, 55, 0.8);
+				border-color: #555;
+				color: white;
+			}
+
+			body.dark .copy-button:hover {
+				background: rgba(31, 41, 55, 0.9);
+			}
+
+			body.dark .message code {
+				background: rgba(255, 255, 255, 0.1);
+			}
+
+			body.dark .message pre {
+				background: rgba(255, 255, 255, 0.1);
+			}
 		</style>
 	</head>
 	<body>
 		<header>
-			<h1>Cloudflare AI Chat</h1>
-			<p>Powered by Cloudflare Workers AI</p>
+			<div style="display: flex; justify-content: space-between; align-items: center;">
+				<div>
+					<h1>Cloudflare AI Chat</h1>
+					<p>Powered by Cloudflare Workers AI</p>
+				</div>
+				<div style="display: flex; gap: 0.5rem;">
+					<button id="newChatButton" style="background: var(--primary-color); color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">New Chat</button>
+					<button id="themeToggle" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">🌙</button>
+				</div>
+			</div>
 		</header>
 
 		<div class="chat-container">
 			<div id="chat-messages" class="chat-messages">
-				<div class="message assistant-message">
-					<p>
-						Hello! I'm an LLM chat app powered by Cloudflare Workers AI. How can
-						I help you today?
-					</p>
-				</div>
 			</div>
 
 			<div class="typing-indicator" id="typing-indicator">
